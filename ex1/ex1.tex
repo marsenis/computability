@@ -25,7 +25,13 @@
 \setmainfont[Mapping=tex-text]{CMU Serif}
 
 % Auxiliary commands
-\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\red}{\leq_{\text{m}}}
+
+\newtheorem{thm}{Θεώρημα}
+\newtheorem{lm}[thm]{Λήμμα}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Ορισμός}
 
 \begin{document}
 
@@ -53,12 +59,50 @@
 
          Στα παρακάτω θα χρησιμοποιήσουμε το εξής πρόβλημα:
 
-         \[ \text{HALT} = \{ \langle M \rangle\ |\ \exists x: M(x) \downarrow \} \]
+         \[ \text{HALT} = \{ \langle M, w \rangle\ |\ M(w) \downarrow \} \]
 
          για το οποίο γνωρίζουμε ότι $\text{HALT } \in \text{ ER}$ και
-         $\overline{\text{HALT} } \notin \text{ ER}$.
+         $\text{HALT } \notin \text{REC}$ επομένως
+         $\overline{\text{HALT} } \notin \text{ ER}$ και θα κάνουμε την
+         αναγωγή $\overline{\text{HALT} } \red R$ από την οποία
+         προκύπτει ότι $R \notin \text{ER}$. Συνεπώς και $R \cup K \notin \text{ER}$.
 
-         ...
+         \begin{lm}
+            $\overline{\text{HALT}} \red R$.
+         \end{lm}
+         \begin{proof}
+            Θα πρέπει να βρούμε μια συνάρτηση $f : \mathbb{N} \rightarrow \mathbb{N}$
+            η οποία να είναι υπολογίσιμη και για την οποία
+            να ισχύει:
+            $\langle M, w \rangle \in \overline{\text{HALT}} \Leftrightarrow
+               f(\langle M, w \rangle) \in R$.
+
+            Αυτή η $f$ θα είναι η συνάρτηση που υπολογίζει η παρακάτω μηχανή Turing:
+
+            \begin{itemize}
+               \item $F = $`` Για είσοδο $\langle M, w \rangle$:
+               \begin{enumerate}
+               \item Δημιούργησε την περιγραφή και βρες
+                     τον αριθμό G\"{o}del $g$ της μηχανής Turing $T$:\\
+                     $T = $ `Για είσοδο $\langle T_1, x \rangle$:
+                     \begin{enumerate}
+                     \item Προσομοίωσε παράλληλα την $M$ με είσοδο $w$ και
+                           την $T_1$ με είσοδο $x$.
+                     \item Αν τερματίσουν και οι δύο, τότε επέστρεψε το $T_1(x)$.'
+                     \end{enumerate}
+               \item Γράψε $g$ στην ταινία εξόδου.''
+               \end{enumerate}
+            \end{itemize}
+
+            Έστω ότι $\langle M, w \rangle \in \overline{\text{HALT}}$, δηλαδή $M(w)
+            \uparrow$, τότε η μηχανή $T$ δεν τερματίζει για καμία είσοδο άρα
+            $f(\langle M, w \rangle) = g$ όπου $g$ τέτοιο ώστε $\text{Dom}(\phi_g) =
+            \emptyset \in \text{REC}$, συνεπώς $g \in R$.
+
+            Αντίστροφα, αν $\langle M, w \rangle \in \text{HALT}$ τότε η συνάρτηση $f$
+            επιστρέφει ένα $g$ για το οποίο $\text{Dom}(\phi_g) = \text{HALT} \notin
+            \text{REC}$, άρα $g \in \overline{R}$.
+         \end{proof}
          
 \end{itemize}
 
