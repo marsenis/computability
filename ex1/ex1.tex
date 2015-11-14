@@ -1,0 +1,65 @@
+% --- To be compiled with XeLaTeX ---
+% ---      Encoding: UTF-8        ---
+
+\documentclass[a4paper, oneside, 11pt]{article}
+
+%fontspec package provides a configurable interface for font selection, and allows complex font choices to be named and later reused. It's needed for XeLaTeX
+\usepackage[cm-default]{fontspec}
+
+% Unicode support
+\usepackage{xunicode}
+\usepackage{xltxtra}
+
+% Default words and phrases in Greek (e.g. 'Περίληψη' instead of 'Abstract'). Also contains hyphenation rules for Greek Language
+\usepackage{xgreek}
+
+% Mathematical fonts, theorems etc.
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+% Default page layout for consuming a larger portion of the page.
+\usepackage{fullpage}
+
+% Greek fonts (Computer Modern)
+\setmainfont[Mapping=tex-text]{CMU Serif}
+
+% Auxiliary commands
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\begin{document}
+
+\section*{Άσκηση 1}
+
+\begin{itemize}
+   \item \textbf{Ψευδής}
+   
+         Έστω $x$ τέτοιο ώστε $M_x$ να είναι μια TM η οποία δεν τερματίζει για καμία
+         είσοδο.  Τότε έχουμε $\text{Dom}(\phi_x) = \emptyset$ το οποίο είναι
+         αναδρομικό σύνολο (το αποφασίζει η μηχανή Turing που απορρίπτει κάθε
+         είσοδο), δηλαδή $x \in R$. Όμως από τον ορισμό της $M_x$ έχουμε $M_x(x)
+         \uparrow$, δηλαδή $x \notin K$.
+
+   \item \textbf{Ψευδής}
+
+         Έστω $x$ τέτοιο ώστε $M_x$ να είναι μια TM η οποία τερματίζει και
+         αποδέχεται κάθε είσοδο.
+         Τότε έχουμε $\text{Dom}(\phi_x) = \mathbb{N}$ το οποίο είναι
+         αναδρομικό σύνολο (το αποφασίζει η μηχανή Turing που αποδέχεται κάθε
+         είσοδο), δηλαδή $x \in R$. Όμως από τον ορισμό της $M_x$ έχουμε $M_x(x)
+         \downarrow$, δηλαδή $x \in K$ συνεπώς $x \in R \cap K$.
+
+   \item \textbf{Ψευδής}
+
+         Στα παρακάτω θα χρησιμοποιήσουμε το εξής πρόβλημα:
+
+         \[ \text{HALT} = \{ \langle M \rangle\ |\ \exists x: M(x) \downarrow \} \]
+
+         για το οποίο γνωρίζουμε ότι $\text{HALT } \in \text{ ER}$ και
+         $\overline{\text{HALT} } \notin \text{ ER}$.
+
+         ...
+         
+\end{itemize}
+
+\end{document}
