@@ -236,6 +236,32 @@ HALT. Άτοπο, άρα $L \notin \text{REC}$.
 και παλίνδρομο, αλλά και να ανήκει στη γλώσσα $L$. Αντίστροφα, αν η $x$ είναι παλίνδρομο και ανήκει στην $L$
 τότε θα την αποδεχθούν και η $M_1$ και η $M_2$. Συνεπώς το σύνολο των παλινδρόμων της $L$ είναι αναγνωρίσιμο.
 
+\section*{Άσκηση 7}
+
+Θα δείξουμε ότι $\overline{\text{HALT}} \red L$ και συνεπώς $L \notin \text{ER}$ αφού
+$\overline{\text{HALT}} \notin \text{ER}$.
+
+Η συνάρτηση $f$ της αναγωγής υπολογίζεται από την παρακάτω TM:
+
+\begin{itemize}
+\item $T = $``Για είσοδο $\langle M, w \rangle$:
+      \begin{enumerate}
+      \item Δημιούργησε τις μηχανές Turing:
+            \begin{enumerate}
+               \item $M_1(x) = $`Αγνόησε την είσοδο και πέσε σε άπειρο βρόχο.'
+               \item $M_2(x) = $`Αγνόησε την είσοδο, προσομοίωσε την $M$ με είσοδο $w$ και
+               τερμάτισε ανν $M(w) \downarrow$.'
+            \end{enumerate}
+      \item Επέστρεψε $\langle M_1, M_2 \rangle$.''
+      \end{enumerate}
+\end{itemize}
+
+Αν $\langle M, w \rangle \in \overline{\text{HALT}}$, δηλαδή $M(w) \uparrow$ τότε
+για κάθε $x \in \Sigma^*: M_2(x) \uparrow$ άρα $\langle M_1, M_2 \rangle \in L$.
+Αντίστροφα, αν $\langle M, w \rangle \in \text{HALT}$, τότε για κάθε $x: M_2(x)
+\downarrow$. Επίσης εξ ορισμού για κάθε $x: M_1(x) \uparrow$ συνεπώς $\langle
+M_1, M_2, \rangle \in \overline{L}$.
+
 \section*{Άσκηση 8}
 
 (Θεωρούμε ότι ο τελεστής $\lfloor\cdot\rfloor$ είναι ο αντίστροφος του $\langle\cdot\rangle$.)
@@ -445,8 +471,9 @@ $T$ τερματίζει και επιστρέφει $T(n) = f(n)$
 \begin{lm}
 Για κάθε μηχανή Turing $Μ$ υπάρχει μια μηχανή $\widetilde{M}$ η οποία να αναγνωρίζει
 την ίδια γλώσσα $L(\widetilde{M}) = L(M)$ και τερματίζει πάντα σε άρτιο πλήθος
-βημάτων. Επιπλέον, αν $M$ \emph{αποφασίζει} την $L(M)$ το ίδιο θα ισχύει και για την
-$\widetilde{M}$. Τέλος, αυτή η μηχανή μπορεί να κατασκευαστεί μηχανικά, δηλαδή
+βημάτων.
+%Επιπλέον, αν $M$ \emph{αποφασίζει} την $L(M)$ το ίδιο θα ισχύει και για την $\widetilde{M}$.
+Επιπλέον, αυτή η μηχανή μπορεί να κατασκευαστεί μηχανικά, δηλαδή
 υπάρχει TM $T$ για την οποία $T(\langle M \rangle) = \langle \widetilde{M} \rangle$.
 \end{lm}
 
@@ -455,19 +482,57 @@ $\widetilde{M}$. Τέλος, αυτή η μηχανή μπορεί να κατα
 Θέτουμε:
 
 \begin{align*}
-\widetilde{Q} &= \{ (q, \text{EVEN}), (q, \text{ODD})\ |\ q \in Q\backslash
+\widetilde{Q} &= \{ (q, \text{ΑΡΤΙΑ}), (q, \text{ΠΕΡΙΤΤΗ})\ |\ q \in Q\backslash
    \{q_\text{ΟΧΙ}\} \} \cup \{ q_\text{ΟΧΙ} \}\\
-\widetilde{\Sigma} &= \Sigma\\
-\widetilde{\Delta} &= \Delta\\
-\widetilde{\delta}( (q, x), a ) &= \ldots\\
-\widetilde{q_0} &= q_0\\
-\widetilde{q_\text{ΝΑΙ}} &= q_\text{ΝΑΙ, EVEN}\\
+\widetilde{\delta}( (q, x), a ) &= 
+\left\{
+   \begin{array}{ll}
+      ((q_\text{ΝΑΙ}, \text{ΑΡΤΙΑ}), \Delta) & q = ( q_\text{ΝΑΙ}, \text{ΠΕΡΙΤΤΗ} )\\
+      (q_\text{ΟΧΙ}, y) \ & \delta(q, a) = (q_\text{ΟΧΙ}, y) \\
+      ((q', \overline{x}), y) & \text{διαφορετικά, αν } \delta(q, a) = (q', y)\\
+   \end{array}
+\right.\\
+\widetilde{q_\text{ΝΑΙ}} &= (q_\text{ΝΑΙ}, \text{ΑΡΤΙΑ})\\
 \end{align*}
 
-όπου $\overline{\text{EVEN}} = \text{ODD}$ και $\overline{\text{ODD}} =
-\text{EVEN}$.
+όπου $\overline{\text{ΑΡΤΙΑ}} = \text{ΠΕΡΙΤΤΗ}$ και $\overline{\text{ΠΕΡΙΤΤΗ}} =
+\text{ΑΡΤΙΑ}$.
+
+Η μηχανή $\widetilde{M} = (\widetilde{Q}, \Sigma, \Delta, \widetilde{\delta}, q_0,
+\widetilde{q_\text{ΝΑΙ}}, q_\text{ΟΧΙ})$ διαισθητικά αυτό που κάνει είναι να κρατάει
+στις καταστάσεις τις το αν βρίσκεται σε άρτιο ή περιττό βήμα και όταν τερματίζει να
+κάνει μία επιπλέον κίνηση αν χρειαστεί ώστε να τερματίσει σε άρτιο βήμα.
+
+Είναι φανερό ότι η $\widetilde{M}$ τερματίζει ανν τερματίζει και η $M$ για την ίδια
+είσοδο και επίσης όλη η παραπάνω κατασκευή μπορεί να εκτελεστεί από μία μηχανή
+Turing.
 \end{proof}
 
+Έστω ότι η γλώσσα $L$ της εκφώνησης ήταν αναδρομική και έστω $R$ η μηχανή που την
+αποφασίζει. Τότε θα μπορούσαμε να δημιουργήσουμε την εξής TM:
+
+\begin{itemize}
+\item $T = $``Για είσοδο $\langle M, w \rangle$:
+      \begin{enumerate}
+      \item Δημιούργησε την μηχανή $M'$ η οποία αγνοεί την είσοδό της,
+      προσομοιώνει την $M $ με είσοδο $w$ και αποδέχεται
+      ανν η $M$ αποδεχθεί.
+      \item Χρησιμοποιώντας την μηχανή $T$ του λήμματος, δημιούργησε την μηχανή
+      Turing $\widetilde{M'}$.
+      \item Προσομοίωσε την $R$ με είσοδο $\langle \widetilde{M'} \rangle$
+      και αποδέξου ανν η $R$ αποδεχθεί.
+      \end{enumerate}
+\end{itemize}
+
+Η παραπάνω μηχανή αποφασίζει τη γλώσσα $A_{TM} = \{ \langle M, w \rangle\ |\ w \in
+L(M) \}$. Πράγματι, έστω ότι $w \in L(M)$, τότε $L(M') = \Sigma^*$ και με βάση το
+λήμμα $L(\widetilde{M'}) = \Sigma^*$ και μάλιστα η $\widetilde{M'}$ θα αποδέχεται
+σε άρτιο πλήθος βημάτων. Συνεπώς $\langle \widetilde{M'} \rangle \in L$. Αντίθετα, αν
+$w \notin L(M)$ τότε $L(M') = \emptyset$ και τελικά $\langle \widetilde{M'} \rangle
+\notin L$.
+
+Καταλήγουμε λοιπόν σε άτοπο αφού ως γνωστόν $A_{TM} \notin \text{REC}$, συνεπώς
+$L \notin \text{REC}$.
 \section*{Άσκηση 16}
 
 Υποθέτουμε ότι η $\phi$ είναι υπολογίσιμη.
