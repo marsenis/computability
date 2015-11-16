@@ -438,6 +438,24 @@ $\widetilde{M}$. Τέλος, αυτή η μηχανή μπορεί να κατα
 υπάρχει TM $T$ για την οποία $T(\langle M \rangle) = \langle \widetilde{M} \rangle$.
 \end{lm}
 
+\begin{proof}
+Έστω $M = (Q, \Sigma, \Delta, \delta, q_0, q_\text{ΝΑΙ}, q_\text{ΟΧΙ})$.
+Θέτουμε:
+
+\begin{align*}
+\widetilde{Q} &= \{ (q, \text{EVEN}), (q, \text{ODD})\ |\ q \in Q\backslash
+   \{q_\text{ΟΧΙ}\} \} \cup \{ q_\text{ΟΧΙ} \}\\
+\widetilde{\Sigma} &= \Sigma\\
+\widetilde{\Delta} &= \Delta\\
+\widetilde{\delta}( (q, x), a ) &= \ldots\\
+\widetilde{q_0} &= q_0\\
+\widetilde{q_\text{ΝΑΙ}} &= q_\text{ΝΑΙ, EVEN}\\
+\end{align*}
+
+όπου $\overline{\text{EVEN}} = \text{ODD}$ και $\overline{\text{ODD}} =
+\text{EVEN}$.
+\end{proof}
+
 \section*{Άσκηση 16}
 
 Υποθέτουμε ότι η $\phi$ είναι υπολογίσιμη.
