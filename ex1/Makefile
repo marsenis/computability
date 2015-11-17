@@ -1,4 +1,4 @@
-ex1.pdf: ex1.tex
+ex1.pdf: ex1.tex title.tex
 	xelatex ex1.tex
 
 clean:
